@@ -3,16 +3,16 @@
     <el-aside style="height: 100vh;">
       <el-input placeholder="Search..." v-model="filter" @input="filteredRestaurant"/>
       <el-menu style="height: 100vh;">
-        <el-menu-item index="1">
+        <el-submenu index="1">
+          <template slot="title"><i class="el-icon-message"></i>Categories</template>
+          <Categories @categoryUpdate="assignCategory"/>
+        </el-submenu>
+        <el-menu-item index="2">
           <Sort @sort="assignSort"/>
         </el-menu-item>
-        <el-menu-item index="2">
+        <el-menu-item index="3">
           <Order @order="assignOrder"/>
         </el-menu-item>
-        <el-submenu index="3">
-          <template slot="title"><i class="el-icon-message"></i>Categories</template>
-          <el-menu-item><Categories /></el-menu-item>
-        </el-submenu>
       </el-menu>
     </el-aside>
     <Restaurants :restaurants="restaurantList" />
@@ -45,6 +45,7 @@ export default class Home extends Vue {
   private filter: string = '';
   private sortValue: string = '';
   private orderValue: string = '';
+  private category: string = '';
 
   @globalValues.State
   public isLoading!: boolean
@@ -67,6 +68,11 @@ export default class Home extends Vue {
     this.filteredRestaurant();
   }
 
+  public assignCategory(val: string): void {
+    this.category = val;
+    this.filteredRestaurant();
+  }
+
   @Debounce(500)
   public filteredRestaurant(): void {
     const params:any = {};
@@ -81,6 +87,10 @@ export default class Home extends Vue {
 
     if(this.orderValue) {
       params.order = this.orderValue;
+    }
+
+    if(this.category) {
+      params.category = this.category;
     }
 
     this.getAllRestaurants(params);
