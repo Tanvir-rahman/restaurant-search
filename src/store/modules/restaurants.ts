@@ -5,7 +5,7 @@ import store from '@/store'
 
 @Module({ namespaced: true })
 class Restaurants extends VuexModule {
-  public restaurantList: Array<object> = []
+  public restaurantList: Array<object> = [{}]
   public fetchedList = false
 
   @Mutation

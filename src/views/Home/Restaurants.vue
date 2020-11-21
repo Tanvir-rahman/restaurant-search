@@ -1,5 +1,5 @@
 <template>
-  <el-row :gutter="10" style="margin: 0">
+  <el-row :gutter="10" style="margin: 0; width: 100%; height: 100vh">
     <el-col v-for="restaurant in restaurants" :key="restaurant.restaurant.id" :xs="24" :sm="12" :md="8">
       <el-card :body-style="{ padding: '0px' }" class="card">
         <img :src="restaurant.restaurant.thumb || 'https://image.freepik.com/free-vector/breakfast-food-doodle-set-vector-illustration_57490-47.jpg'" class="image">
@@ -11,6 +11,9 @@
           </div>
         </div>
       </el-card>
+    </el-col>
+    <el-col v-if="restaurants.length === 0" class="no-data-container">
+      <img src="https://admissions.nyinst.com/images/no-data.png" />
     </el-col>
   </el-row>
 </template>
@@ -55,6 +58,14 @@ export default class Restaurants extends Vue {
   .image {
     width: 100%;
     display: block;
+  }
+
+  .no-data-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
 </style>

@@ -8,13 +8,13 @@
           <Categories @categoryUpdate="assignCategory"/>
         </el-submenu>
         <el-menu-item index="2">
-          <Sort @sort="assignSort"/>
+          <City @cityUpdate="assignCity" />
         </el-menu-item>
         <el-menu-item index="3">
-          <Order @order="assignOrder"/>
+          <Sort @sort="assignSort"/>
         </el-menu-item>
         <el-menu-item index="4">
-          <City @cityUpdate="assignCity" />
+          <Order @order="assignOrder"/>
         </el-menu-item>
       </el-menu>
     </el-aside>

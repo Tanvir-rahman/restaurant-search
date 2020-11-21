@@ -25,9 +25,7 @@ export default class Navbar extends Vue {}
   color: #fff;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   padding: 0 4rem;
-  justify-content: space-around;
   @include respond(tab) {
     min-height: 9rem;
     padding: 0 1rem;
