@@ -26,7 +26,6 @@ export default class Categories extends Vue {
   public getAllCategories!: () => void
 
   public updatedOption(val: object): void {
-    console.log(val);
     this.$emit('categoryUpdate', val);
   }
 }

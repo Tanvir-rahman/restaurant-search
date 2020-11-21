@@ -13,6 +13,9 @@
         <el-menu-item index="3">
           <Order @order="assignOrder"/>
         </el-menu-item>
+        <el-menu-item index="4">
+          <City @cityUpdate="assignCity" />
+        </el-menu-item>
       </el-menu>
     </el-aside>
     <Restaurants :restaurants="restaurantList" />
@@ -25,6 +28,7 @@ import { Debounce } from 'vue-debounce-decorator'
 import Categories from '@/views/Home/Categories.vue';
 import Sort from '@/components/Sort.vue';
 import Order from '@/components/Order.vue';
+import City from '@/components/City.vue';
 import Restaurants from '@/views/Home/Restaurants.vue';
 
 import { namespace } from 'vuex-class'
@@ -37,6 +41,7 @@ const restaurants = namespace('restaurants')
     Categories,
     Sort,
     Order,
+    City,
     Restaurants,
   }
 })
@@ -46,12 +51,15 @@ export default class Home extends Vue {
   private sortValue: string = '';
   private orderValue: string = '';
   private category: string = '';
+  private city: string = '';
 
   @globalValues.State
   public isLoading!: boolean
+
   mounted() {
     this.filteredRestaurant();  
   }
+
   @restaurants.State
   public restaurantList!: Array<object>
 
@@ -73,6 +81,11 @@ export default class Home extends Vue {
     this.filteredRestaurant();
   }
 
+  public assignCity(val: string): void {
+    this.city = val;
+    this.filteredRestaurant();
+  }
+
   @Debounce(500)
   public filteredRestaurant(): void {
     const params:any = {};
@@ -91,6 +104,11 @@ export default class Home extends Vue {
 
     if(this.category) {
       params.category = this.category;
+    }
+
+    if(this.city) {
+      params.entity_type = 'city';
+      params.entity_id = this.city;
     }
 
     this.getAllRestaurants(params);
