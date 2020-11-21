@@ -13,24 +13,18 @@ class Restaurants extends VuexModule {
     this.restaurantList = data
   }
   @Action
-  public getAllRestaurants(): Promise<boolean> {
-    if (this.fetchedList) {
-      return Promise.resolve(true)
-    } else {
-      return api
-        .get('/search')
-        .then(response => {
-          this.context.commit('saveList', response.data.restaurants)
-          return true
-        })
-        .catch(() => {
-          notify({
-            title: 'Error',
-            type: 'error',
-            message: 'Could not fetch the restaurant list'
-          })
-          return false
-        })
+  public async getAllRestaurants(params: any): Promise<boolean> {
+    try {
+      const result = await api({url: '/search', params});
+      this.context.commit('saveList', result.data.restaurants)
+      return true;
+    } catch (err) {
+      notify({
+        title: 'Error',
+        type: 'error',
+        message: 'Could not fetch the restaurant list'
+      })
+      return false
     }
   }
 }

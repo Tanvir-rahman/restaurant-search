@@ -6,9 +6,13 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+
 import Navbar from '@/components/Navbar.vue'
+
 import { namespace } from 'vuex-class'
+
 const globalValues = namespace('globalValues')
+
 @Component({
   components: {
     Navbar
