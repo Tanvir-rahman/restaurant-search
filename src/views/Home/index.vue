@@ -3,10 +3,13 @@
     <el-aside style="height: 100vh;">
       <el-input placeholder="Search..." v-model="filter" @input="filteredRestaurant"/>
       <el-menu style="height: 100vh;">
-        <el-menu-item index="2">
+        <el-menu-item index="1">
           <Sort @sort="assignSort"/>
         </el-menu-item>
-        <el-submenu index="1">
+        <el-menu-item index="2">
+          <Order @order="assignOrder"/>
+        </el-menu-item>
+        <el-submenu index="3">
           <template slot="title"><i class="el-icon-message"></i>Categories</template>
           <el-menu-item><Categories /></el-menu-item>
         </el-submenu>
@@ -21,6 +24,7 @@ import { Debounce } from 'vue-debounce-decorator'
 
 import Categories from '@/views/Home/Categories.vue';
 import Sort from '@/components/Sort.vue';
+import Order from '@/components/Order.vue';
 import Restaurants from '@/views/Home/Restaurants.vue';
 
 import { namespace } from 'vuex-class'
@@ -32,6 +36,7 @@ const restaurants = namespace('restaurants')
   components: {
     Categories,
     Sort,
+    Order,
     Restaurants,
   }
 })
@@ -39,6 +44,7 @@ const restaurants = namespace('restaurants')
 export default class Home extends Vue {
   private filter: string = '';
   private sortValue: string = '';
+  private orderValue: string = '';
 
   @globalValues.State
   public isLoading!: boolean
@@ -56,6 +62,11 @@ export default class Home extends Vue {
     this.filteredRestaurant();
   }
 
+  public assignOrder(val: string): void {
+    this.orderValue = val;
+    this.filteredRestaurant();
+  }
+
   @Debounce(500)
   public filteredRestaurant(): void {
     const params:any = {};
@@ -66,6 +77,10 @@ export default class Home extends Vue {
 
     if(this.sortValue) {
       params.sort = this.sortValue;
+    }
+
+    if(this.orderValue) {
+      params.order = this.orderValue;
     }
 
     this.getAllRestaurants(params);
