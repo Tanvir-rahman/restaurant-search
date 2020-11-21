@@ -2,7 +2,10 @@
   <el-container style="height: 100vh; border: 1px solid #eee">
     <el-aside style="height: 100vh;">
       <el-input placeholder="Search..." v-model="filter" @input="filteredRestaurant"/>
-      <el-menu :default-openeds="['1', '3']" style="height: 100vh;">
+      <el-menu style="height: 100vh;">
+        <el-menu-item index="2">
+          <Sort @sort="assignSort"/>
+        </el-menu-item>
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-message"></i>Categories</template>
           <el-menu-item><Categories /></el-menu-item>
@@ -17,6 +20,7 @@ import { Vue, Component } from 'vue-property-decorator';
 import { Debounce } from 'vue-debounce-decorator'
 
 import Categories from '@/views/Home/Categories.vue';
+import Sort from '@/components/Sort.vue';
 import Restaurants from '@/views/Home/Restaurants.vue';
 
 import { namespace } from 'vuex-class'
@@ -27,12 +31,14 @@ const restaurants = namespace('restaurants')
 @Component({
   components: {
     Categories,
-    Restaurants
+    Sort,
+    Restaurants,
   }
 })
 
 export default class Home extends Vue {
   private filter: string = '';
+  private sortValue: string = '';
 
   @globalValues.State
   public isLoading!: boolean
@@ -45,6 +51,11 @@ export default class Home extends Vue {
   @restaurants.Action
   public getAllRestaurants!: (params: any) => void
 
+  public assignSort(val: string): void {
+    this.sortValue = val;
+    this.filteredRestaurant();
+  }
+
   @Debounce(500)
   public filteredRestaurant(): void {
     const params:any = {};
@@ -52,14 +63,14 @@ export default class Home extends Vue {
     if(this.filter) {
       params.q = this.filter;
     }
-    console.log('sdfsdf');
+
+    if(this.sortValue) {
+      params.sort = this.sortValue;
+    }
+
     this.getAllRestaurants(params);
   }
 }
 </script>
 <style lang="scss" scoped>
-a {
-  text-decoration: none;
-  font-style: none;
-}
 </style>

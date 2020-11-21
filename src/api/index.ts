@@ -1,5 +1,4 @@
 import axios from 'axios'
-import store from '@/store'
 
 const config = {
   baseURL: 'https://developers.zomato.com/api/v2.1',
@@ -8,16 +7,13 @@ const config = {
 
 const call = axios.create(config)
 call.interceptors.request.use(request => {
-  store.dispatch('globalValues/setLoading', true)
   return request
 })
 call.interceptors.response.use(
   response => {
-    store.dispatch('globalValues/setLoading', false)
     return response
   },
   error => {
-    store.dispatch('globalValues/setLoading', false)
     return error
   }
 )
