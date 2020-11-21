@@ -9,25 +9,38 @@
         </el-submenu>
       </el-menu>
     </el-aside>
+    <Restaurants :restaurants="restaurantList" />
   </el-container>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 
 import Categories from '@/views/Home/Categories.vue';
+import Restaurants from '@/views/Home/Restaurants.vue';
 
 import { namespace } from 'vuex-class'
+
 const globalValues = namespace('globalValues')
+const restaurants = namespace('restaurants')
 
 @Component({
   components: {
-    Categories
+    Categories,
+    Restaurants
   }
 })
 
 export default class Home extends Vue {
-    @globalValues.State
+  @globalValues.State
   public isLoading!: boolean
+    async mounted() {
+    await this.getAllRestaurants();
+  }
+  @restaurants.State
+  public restaurantList!: Array<object>
+
+  @restaurants.Action
+  public getAllRestaurants!: () => void
 }
 </script>
 <style lang="scss" scoped>
