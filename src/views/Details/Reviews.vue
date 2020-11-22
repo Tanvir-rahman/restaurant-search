@@ -37,9 +37,6 @@ export default class Reviews extends Vue {
     margin: 10px 0;
   }
   .item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     height: 180px;
     margin-bottom: 10px;
     overflow: auto;
