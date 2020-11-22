@@ -19,6 +19,7 @@ export default class Categories extends Vue {
   async mounted() {
     await this.getAllCategories();
   }
+  
   @categories.State
   public categoryList!: Array<object>
 

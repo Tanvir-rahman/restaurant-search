@@ -5,9 +5,6 @@
         Restaurant Seach App
       </router-link>
     </div>
-    <div class="main-links">
-
-    </div>
   </div>
 </template>
 <script lang="ts">
@@ -34,6 +31,9 @@ export default class Navbar extends Vue {}
     padding: 0.5rem 0.5rem;
     font-size: 2.4rem;
     color: #fff;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 </style>

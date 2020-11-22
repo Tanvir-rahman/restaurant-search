@@ -1,20 +1,27 @@
 <template>
   <el-row :gutter="10" style="margin: 0; width: 100%; height: 100vh">
-    <el-col v-for="restaurant in restaurants" :key="restaurant.restaurant.id" :xs="24" :sm="12" :md="8">
-      <el-card :body-style="{ padding: '0px' }" class="card">
-        <img :src="restaurant.restaurant.thumb || 'https://image.freepik.com/free-vector/breakfast-food-doodle-set-vector-illustration_57490-47.jpg'" class="image">
-        <div style="padding: 14px;">
-          <span>{{ restaurant.restaurant.name }}</span>
-          <div class="bottom clearfix">
-            <span class="time">Rating: {{ restaurant.restaurant.user_rating.aggregate_rating }}</span>
-            <span type="text" class="address">{{ restaurant.restaurant.location.address }}, {{ restaurant.restaurant.location.city }}</span>
-          </div>
-        </div>
-      </el-card>
-    </el-col>
     <el-col v-if="restaurants.length === 0" class="no-data-container">
       <img src="https://admissions.nyinst.com/images/no-data.png" />
     </el-col>
+    <div v-else>
+      <el-col v-for="(restaurant,index) in restaurants" :key="index" :xs="24" :sm="12" :md="8">
+        <router-link
+          v-if="restaurant.restaurant"
+          :to="'/restaurant/' + restaurant.restaurant.id"
+        >
+          <el-card :body-style="{ padding: '0px' }" class="card">
+            <img :src="restaurant.restaurant.thumb || 'https://image.freepik.com/free-vector/breakfast-food-doodle-set-vector-illustration_57490-47.jpg'" class="image">
+            <div style="padding: 14px;">
+              <span>{{ restaurant.restaurant.name }}</span>
+              <div class="bottom clearfix">
+                <span class="time">Rating: {{ restaurant.restaurant.user_rating.aggregate_rating }}</span>
+                <span type="text" class="address">{{ restaurant.restaurant.location.address }}, {{ restaurant.restaurant.location.city }}</span>
+              </div>
+            </div>
+          </el-card>
+        </router-link>
+      </el-col>
+    </div>
   </el-row>
 </template>
 
@@ -66,6 +73,10 @@ export default class Restaurants extends Vue {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  a {
+    text-decoration: none;
   }
 
 </style>

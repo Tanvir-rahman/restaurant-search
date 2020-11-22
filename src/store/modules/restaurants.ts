@@ -6,11 +6,12 @@ import store from '@/store'
 @Module({ namespaced: true })
 class Restaurants extends VuexModule {
   public restaurantList: Array<object> = [{}]
-  public fetchedList = false
+  public restaurantDetails: any = {}
+  public restaurantMenu: Array<object> = [{}]
+  public restaurantReviews: Array<object> = [{}]
 
   @Mutation
   public saveList(data: Array<object>): void {
-    this.fetchedList = true
     this.restaurantList = data
   }
   @Action
@@ -29,6 +30,69 @@ class Restaurants extends VuexModule {
       return false
     } finally {
       store.dispatch('globalValues/setLoading', false)
+    }
+  }
+
+  @Mutation
+  public saveRestaurant(data: any): void {
+    this.restaurantDetails = data
+  }
+  @Action
+  public async getRestaurantDetails(params: any): Promise<boolean> {
+    try {
+      store.dispatch('globalValues/setLoading', true)
+      const result = await api({url: '/restaurant', params});
+      this.context.commit('saveRestaurant', result.data)
+      return true;
+    } catch (error) {
+      notify({
+        title: 'Error',
+        type: 'error',
+        message: 'Could not fetch the restaurant details'
+      })
+      return false;
+    } finally {
+      store.dispatch('globalValues/setLoading', false)
+    }
+  }
+
+  @Mutation
+  public saveRestaurantMenu(data: any): void {
+    this.restaurantMenu = data
+  }
+  @Action
+  public async getRestaurantMenu(params: any): Promise<boolean> {
+    try {
+      const result = await api({url: '/dailymenu', params});
+      this.context.commit('saveRestaurantMenu', result.data.daily_menu)
+      return true;
+    } catch (error) {
+      notify({
+        title: 'Error',
+        type: 'error',
+        message: 'Could not fetch the restaurant menu'
+      })
+      return false;
+    }
+  }
+
+  @Mutation
+  public saveRestaurantReviews(data: any): void {
+    this.restaurantReviews = data
+  }
+  @Action
+  public async getRestaurantReviews(params: any): Promise<boolean> {
+    try {
+      const result = await api({url: '/reviews', params});
+      this.context.commit('saveRestaurantReviews', result.data.user_reviews);
+      return true;
+    } catch (error) {
+      notify({
+        title: 'Error',
+        type: 'error',
+        message: 'Could not fetch the restaurant reviews'
+      })
+      return false;
     }
   }
 }

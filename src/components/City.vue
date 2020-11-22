@@ -55,6 +55,7 @@ export default class City extends Vue {
       try {
         this.getAllCities(params);
       } catch (error) {
+        console.log(error);
       } finally {
         this.loading = false
       }
