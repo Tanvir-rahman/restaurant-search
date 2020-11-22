@@ -1,6 +1,6 @@
 ## Tech
 - Used Vue JS, Element Ui for the app
-- Visit [Quick Start](https://res-search.netlify.app/) for live preview
+- [Visit](https://res-search.netlify.app/) for live preview
 
 ## Run Instructions
 - yarn install
