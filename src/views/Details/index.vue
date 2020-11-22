@@ -28,6 +28,9 @@
         <p><span class="subtitle">Phone Number:</span> {{restaurantDetails.phone_numbers || 'N/A' }}</p>
       </div>
     </div>
+    <div class="no-data-container" v-else>
+      <img src="https://admissions.nyinst.com/images/no-data.png" />
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -86,16 +89,27 @@ export default class Details extends Vue {
         width: 500px
       }
     }
+
     .subtitle {
       font-size: 16px;
       font-weight: bold;
       margin-bottom: 10px;
     }
+
     .time {
       margin: 10px 0;
     }
+
     .contact p {
       margin-bottom: 5px;
     }
+  }
+  
+  .no-data-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 </style>

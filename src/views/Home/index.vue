@@ -1,6 +1,6 @@
 <template>
   <el-container style="height: 100vh; border: 1px solid #eee">
-    <el-aside style="height: 100vh;">
+    <el-aside style="height: 100vh;" class="hidden-xs">
       <el-input placeholder="Search..." v-model="filter" @input="filteredRestaurant"/>
       <el-menu style="height: 100vh;">
         <el-submenu index="1">
@@ -116,4 +116,9 @@ export default class Home extends Vue {
 }
 </script>
 <style lang="scss" scoped>
+@media only screen and (max-width: 768px) {
+  .hidden-xs {
+    display: none;
+  }
+}
 </style>

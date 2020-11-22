@@ -79,4 +79,10 @@ export default class Restaurants extends Vue {
     text-decoration: none;
   }
 
+  @media only screen and (max-width: 769px) {
+    .card {
+      height: auto;
+    }
+  }
+
 </style>
